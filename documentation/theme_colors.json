@@ -1,0 +1,69 @@
+{
+  "site": "https://constructoraexpe.com",
+  "colors": {
+    "primary": "#F7931E",
+    "secondary": "#000000",
+    "accent": "#FFD700",
+    "background": "#FFFFFF",
+    "text": {
+      "main": "#1A1A1A",
+      "secondary": "#333333",
+      "light": "#666666",
+      "inverse": "#FFFFFF"
+    },
+    "header": {
+      "background": "#000000",
+      "text": "#F5F5F5",
+      "highlight": "#F7931E"
+    },
+    "footer": {
+      "background": "#1A1A1A",
+      "text": "#FFFFFF",
+      "accent": "#F7931E"
+    },
+    "links": {
+      "default": "#F7931E",
+      "hover": "#CC7A15"
+    },
+    "buttons": {
+      "primary_bg": "#25D366",
+      "primary_text": "#FFFFFF",
+      "hover_bg": "#1EBE5C",
+      "secondary_bg": "#F7931E",
+      "secondary_text": "#FFFFFF",
+      "hover_secondary_bg": "#CC7A15"
+    },
+    "icons": {
+      "social_bg": "#FBB117",
+      "social_text": "#000000"
+    },
+    "dividers": "#E0E0E0",
+    "cards": {
+      "background": "#FFFFFF",
+      "shadow": "rgba(0, 0, 0, 0.1)"
+    },
+    "images": {
+      "logo": [
+        "#F7931E",
+        "#000000",
+        "#FFFFFF"
+      ],
+      "hero_section": [
+        "#1A1A1A",
+        "#F7931E",
+        "#E0E0E0"
+      ],
+      "service_cards": [
+        "#000000",
+        "#FFD700",
+        "#FFFFFF"
+      ]
+    }
+  },
+  "summary": {
+    "dominant_colors": ["#F7931E", "#000000", "#FFFFFF"],
+    "style": "corporativo moderno, con alto contraste negro-naranja-blanco",
+    "contrast_ratio": "alto",
+    "intended_effect": "resaltar energía, innovación y profesionalismo en ingeniería eléctrica"
+  }
+}
