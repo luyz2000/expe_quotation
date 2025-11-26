@@ -56,7 +56,7 @@ gem "ransack"
 
 # File uploads - Using Active Storage (Rails built-in)
 gem 'carrierwave', '~> 2.2' # Or a newer stable version
-gem "mimemagic", "~> 0.3.6"
+gem "mimemagic", "~> 0.4.3"
 
 # Background job processing
 gem "sidekiq"
