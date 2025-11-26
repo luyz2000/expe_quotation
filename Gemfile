@@ -55,7 +55,7 @@ gem "pagy"
 gem "ransack"
 
 # File uploads - Using Active Storage (Rails built-in)
-gem 'carrierwave', '~> 2.2' # Or a newer stable version
+gem 'carrierwave', '~> 3.1' # Or a newer stable version
 gem "mimemagic", "~> 0.3.6"
 
 # Background job processing
