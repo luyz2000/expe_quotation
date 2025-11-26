@@ -1,0 +1,87 @@
+.card
+  .card-body
+    = form_with(model: @project, local: true, class: "row g-3") do |form|
+      - if @project.errors.any?
+        .alert.alert-danger
+          %h4= pluralize(@project.errors.count, "error")
+          %ul
+            - @project.errors.full_messages.each do |message|
+              %li= message
+
+      .col-md-6
+        .mb-3
+          = form.label :folio_number, class: "form-label"
+          = form.text_field :folio_number, class: "form-control"
+      .col-md-6
+        .mb-3
+          = form.label :name, class: "form-label"
+          = form.text_field :name, class: "form-control"
+      .col-12
+        .mb-3
+          = form.label :description, class: "form-label"
+          = form.text_area :description, class: "form-control", rows: 3
+      .col-md-6
+        .mb-3
+          = form.label :client_id, "Cliente", class: "form-label"
+          = form.collection_select :client_id, @clients, :id, :company_name, {prompt: "Seleccionar cliente"}, {class: "form-select"}
+      .col-md-6
+        .mb-3
+          = form.label :responsible_id, "Responsable", class: "form-label"
+          = form.collection_select :responsible_id, @users, :id, :name, {prompt: "Seleccionar responsable"}, {class: "form-select"}
+      .col-12
+        .mb-3
+          = form.label :location, class: "form-label"
+          = form.text_area :location, class: "form-control", rows: 2
+      .col-md-4
+        .mb-3
+          = form.label :project_type, class: "form-label"
+          = form.select :project_type, Project.project_types.keys.map {|k| [k.humanize, k]}, {prompt: "Seleccionar tipo"}, {class: "form-select"}
+      .col-md-4
+        .mb-3
+          = form.label :status, class: "form-label"
+          = form.select :status, Project.statuses.keys.map {|k| [k.humanize, k]}, {prompt: "Seleccionar estatus"}, {class: "form-select"}
+      .col-md-4
+        .mb-3
+          = form.label :start_date, class: "form-label"
+          = form.date_field :start_date, class: "form-control"
+      .col-md-6
+        .mb-3
+          = form.label :estimated_end_date, class: "form-label"
+          = form.date_field :estimated_end_date, class: "form-control"
+      .col-md-6
+        .mb-3
+          = form.label :actual_end_date, class: "form-label"
+          = form.date_field :actual_end_date, class: "form-control"
+
+      .col-md-12
+        .mb-3
+          = form.label :attachments, "Archivos Adjuntos", class: "form-label"
+          .nested-fields
+            = form.fields_for :attachments do |attachment_form|
+              .attachment-field.mb-2
+                = attachment_form.file_field :file, class: "form-control mb-1"
+                = attachment_form.text_field :file_description, placeholder: "Descripción del archivo", class: "form-control mb-1"
+                - if attachment_form.object.persisted?
+                  = attachment_form.check_box :_destroy
+                  = attachment_form.label :_destroy, "Eliminar"
+          .add-attachment
+            %button.btn.btn-sm.btn-outline-secondary{type: "button", onclick: "add_attachment_field(this)"}
+              %i.bi.bi-plus
+              Agregar archivo
+      .col-12
+        = form.submit "Guardar", class: "btn btn-primary"
+        = link_to "Cancelar", projects_path, class: "btn btn-secondary"
+
+:javascript
+  function add_attachment_field(button) {
+    const form = $(button).closest('form');
+    const attachmentsContainer = form.find('.nested-fields');
+    const newFieldIndex = attachmentsContainer.find('.attachment-field').length;
+    const newField = `
+      <div class="attachment-field mb-2">
+        <input type="file" name="project[attachments_attributes][${newFieldIndex}][file]" class="form-control mb-1" />
+        <input type="text" name="project[attachments_attributes][${newFieldIndex}][file_description]" placeholder="Descripción del archivo" class="form-control mb-1" />
+      </div>
+    `;
+    attachmentsContainer.append(newField);
+  }

@@ -1,0 +1,46 @@
+%h1.text-main Proyectos
+
+.row.mb-3
+  .col-md-6
+    = search_form_for @q, url: projects_path, class: "d-flex" do |f|
+      = f.search_field :name_cont, placeholder: "Search by name", class: "form-control me-2"
+      = f.search_field :folio_number_cont, placeholder: "Search by folio", class: "form-control me-2"
+      = f.submit "Buscar", class: "btn btn-primary"
+  .col-md-6.text-md-end
+    = link_to "Nuevo Proyecto", new_project_path, class: "btn btn-success"
+
+.table-responsive
+  %table.table.table-striped
+    %thead
+      %tr
+        %th Folio Number
+        %th Name
+        %th Client
+        %th Responsible
+        %th Project Type
+        %th Status
+        %th Start Date
+        %th Estimated End Date
+        %th Actual End Date
+        %th Actions
+    %tbody
+      - @projects.each do |project|
+        %tr
+          %td= project.folio_number
+          %td= project.name
+          %td= project.client&.company_name
+          %td= project.responsible&.name
+          %td= project.project_type&.humanize
+          %td= project.status&.humanize
+          %td= project.start_date
+          %td= project.estimated_end_date
+          %td= project.actual_end_date
+          %td
+            = link_to "Ver", project, class: "btn btn-sm btn-outline-primary"
+            = link_to "Editar", edit_project_path(project), class: "btn btn-sm btn-outline-secondary"
+            = link_to "Eliminar", project, method: :delete, class: "btn btn-sm btn-outline-danger", confirm: "¿Estás seguro?"
+
+.row.mt-3.justify-content-center
+  .col-auto
+    - if @pagy.pages > 1
+      = @pagy.series_nav(:bootstrap).html_safe

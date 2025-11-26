@@ -1,0 +1,36 @@
+.container
+  .row.justify-content-center.align-items-center
+    .col-md-6.col-lg-5
+      .card.shadow-lg.rounded-4.border-0
+        .card-body.p-5
+          .text-center.mb-5
+            .mb-4
+              %i.bi.bi-shield-lock.text-primary
+              %h2.fw-bold.text-main Cambiar Contraseña
+            %h4.fw-bold.text-main Establezca una nueva contraseña
+            %p.text-muted.text-center Ingrese su nueva contraseña
+
+          = render "devise/shared/error_messages", resource: resource
+
+          = form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put, class: "mt-3" }) do |f|
+            = f.hidden_field :reset_password_token
+
+            .mb-4
+              .input-group
+                %span.input-group-text
+                  %i.bi.bi-lock
+                = f.password_field :password, autofocus: true, autocomplete: "new-password", class: "form-control form-control-lg ps-2", placeholder: "Nueva contraseña"
+
+            .mb-4
+              .input-group
+                %span.input-group-text
+                  %i.bi.bi-lock
+                = f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control form-control-lg ps-2", placeholder: "Confirmar nueva contraseña"
+
+            .d-grid
+              = f.submit "Cambiar contraseña", class: "btn btn-secondary btn-lg rounded-pill py-3 fw-bold shadow-sm"
+
+          .text-center.mt-4
+            %p.text-muted
+              ¿Recuerda su contraseña?
+              = link_to "Iniciar sesión", new_session_path(resource_name), class: "text-primary text-decoration-none fw-medium"

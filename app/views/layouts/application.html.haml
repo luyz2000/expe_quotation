@@ -1,0 +1,37 @@
+!!!
+%html
+  %head
+    %title= content_for(:title) || "Expe Quotation"
+    %meta{:name => "viewport", :content => "width=device-width,initial-scale=1"}
+    %meta{:name => "apple-mobile-web-app-capable", :content => "yes"}
+    %meta{:name => "mobile-web-app-capable", :content => "yes"}
+    = csrf_meta_tags
+    = csp_meta_tag
+
+    = yield :head
+
+    / Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!)
+    / = tag.link rel: "manifest", href: pwa_manifest_path(format: :json)
+
+    %link{:rel => "icon", :href => "/icon.png", :type => "image/png"}
+    %link{:rel => "icon", :href => "/icon.svg", :type => "image/svg+xml"}
+    %link{:rel => "apple-touch-icon", :href => "/icon.png"}
+
+    / Includes all stylesheet files in app/assets/stylesheets
+    = stylesheet_link_tag "application", "data-turbo-track": "reload"
+    = javascript_importmap_tags
+
+    :javascript
+      document.addEventListener('DOMContentLoaded', function() {
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-bs-theme', savedTheme);
+      });
+
+  %body.d-flex.flex-column.min-vh-100{data: {controller: controller_name, action: action_name}}
+    = render "shared/header"
+    .container.mt-3.flex-grow-1
+      = content_tag :p, notice, class: "alert alert-success" if notice
+      = content_tag :p, alert, class: "alert alert-danger" if alert
+      = yield
+
+    = render "shared/footer"

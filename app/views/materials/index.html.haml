@@ -1,0 +1,50 @@
+%h1.text-main Materiales
+
+.card.mb-3
+  .card-body
+    .row
+      .col-md-8
+        = search_form_for @q, url: materials_path, class: "row g-3" do |f|
+          .col-md-6
+            = f.label :code_cont, "Código", class: "form-label"
+            = f.search_field :code_cont, class: "form-control"
+          .col-md-6
+            = f.label :title_cont, "Título", class: "form-label"
+            = f.search_field :title_cont, class: "form-control"
+          .col-12
+            = f.submit "Buscar", class: "btn btn-primary"
+            = link_to "Limpiar", materials_path, class: "btn btn-secondary"
+      .col-md-4
+        .text-end
+          = link_to "Nuevo Material", new_material_path, class: "btn btn-success"
+
+.table-responsive
+  %table.table.table-striped
+    %thead
+      %tr
+        %th Código
+        %th Título
+        %th Descripción
+        %th Categoría
+        %th Unidad
+        %th Precio Costo
+        %th Precio Público
+        %th{:colspan => "3"} Acciones
+    %tbody
+      - @materials.each do |material|
+        %tr
+          %td= material.code
+          %td= material.title
+          %td= truncate(material.description, length: 50)
+          %td= material.category&.humanize
+          %td= material.unit&.humanize
+          %td= number_to_currency(material.cost_price)
+          %td= number_to_currency(material.public_price)
+          %td= link_to "Ver", material, class: "btn btn-sm btn-outline-primary"
+          %td= link_to "Editar", edit_material_path(material), class: "btn btn-sm btn-outline-secondary"
+          %td= link_to "Eliminar", material, method: :delete, confirm: "¿Estás seguro?", class: "btn btn-sm btn-outline-danger"
+
+.row.mt-3.justify-content-center
+  .col-auto
+    - if @pagy.pages > 1
+      = @pagy.series_nav(:bootstrap).html_safe

@@ -1,0 +1,36 @@
+%h1.text-main= @client.company_name
+
+.card.mb-3
+  .card-body
+    %h5.card-title Customer Information
+    .row
+      .col-md-6
+        %p
+          %strong Tax ID:
+          = @client.tax_id
+        %p
+          %strong Contact Name:
+          = @client.contact_name
+        %p
+          %strong Email:
+          = @client.contact_email
+        %p
+          %strong Phone:
+          = @client.contact_phone
+      .col-md-6
+        %p
+          %strong Client Type:
+          = @client.client_type&.humanize
+        %p
+          %strong City:
+          = @client.city
+        %p
+          %strong State:
+          = @client.state
+    %p
+      %strong Address:
+      = @client.address
+
+.card-footer
+  = link_to "Editar", edit_client_path(@client), class: "btn btn-primary"
+  = link_to "Regresar", clients_path, class: "btn btn-secondary"

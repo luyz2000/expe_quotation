@@ -20,7 +20,7 @@ gem "cssbundling-rails"
 gem "jbuilder"
 
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
-# gem "bcrypt", "~> 3.1.7"
+gem "bcrypt", "~> 3.1.7"
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[ windows jruby ]
@@ -33,15 +33,35 @@ gem "solid_cable"
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
 
-# Deploy this application anywhere as a Docker container [https://kamal-deploy.org]
-gem "kamal", require: false
-
 # Add HTTP asset caching/compression and X-Sendfile acceleration to Puma [https://github.com/basecamp/thruster/]
 gem "thruster", require: false
 
-# Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
-# gem "image_processing", "~> 1.2"
+# Authentication and Authorization
+gem "devise"
+gem "cancancan"
 
+# QR Code generation
+gem "rqrcode"
+
+# PDF generation
+gem "prawn"
+gem "prawn-table"
+gem "combine_pdf"
+
+# Pagination
+gem "pagy"
+
+# Advanced search and filtering
+gem "ransack"
+
+# File uploads - Using Active Storage (Rails built-in)
+gem 'carrierwave', '~> 2.2' # Or a newer stable version
+gem "mimemagic", "~> 0.3.6"
+
+# Background job processing
+gem "sidekiq"
+
+# Testing
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
@@ -51,11 +71,19 @@ group :development, :test do
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
+
+  # Testing gems
+  gem "rspec-rails"
+  gem "factory_bot_rails"
+  gem "faker"
 end
 
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
+
+  # Documentation
+  gem "annotaterb"
 end
 
 group :test do
@@ -63,3 +91,17 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
 end
+
+# Code quality
+gem "rubocop", require: false
+gem "rubocop-rails", require: false
+
+# Audit trail
+gem "paper_trail"
+
+# HAML templating
+gem "hamlit"
+gem "haml-rails"
+
+# Redis for cache and sessions and Sidekiq
+gem "redis"

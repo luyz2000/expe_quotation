@@ -1,0 +1,91 @@
+.card
+  .card-body
+    = form_with(model: @quotation, local: true, class: "row g-3") do |form|
+      - if @quotation.errors.any?
+        .alert.alert-danger
+          %h4= pluralize(@quotation.errors.count, "error")
+          %ul
+            - @quotation.errors.full_messages.each do |message|
+              %li= message
+
+      .col-md-6
+        .mb-3
+          = form.label :quotation_number, class: "form-label"
+          = form.text_field :quotation_number, class: "form-control"
+      .col-md-6
+        .mb-3
+          = form.label :project_id, "Project", class: "form-label"
+          = form.collection_select :project_id, @projects, :id, :name, {prompt: "Select project"}, {class: "form-select"}
+      .col-md-6
+        .mb-3
+          = form.label :client_id, "Client", class: "form-label"
+          = form.collection_select :client_id, @clients, :id, :company_name, {prompt: "Select client"}, {class: "form-select"}
+      .col-md-6
+        .mb-3
+          = form.label :salesperson_id, "Salesperson", class: "form-label"
+          = form.collection_select :salesperson_id, @users, :id, :name, {prompt: "Select salesperson"}, {class: "form-select"}
+      .col-md-4
+        .mb-3
+          = form.label :project_type, class: "form-label"
+          = form.select :project_type, Quotation.project_types.keys.map {|k| [k.humanize, k]}, {prompt: "Select project type"}, {class: "form-select"}
+      .col-md-4
+        .mb-3
+          = form.label :publish_date, class: "form-label"
+          = form.date_field :publish_date, class: "form-control"
+      .col-md-4
+        .mb-3
+          = form.label :expiry_date, class: "form-label"
+          = form.date_field :expiry_date, class: "form-control"
+      .col-md-6
+        .mb-3
+          = form.label :subtotal, class: "form-label"
+          = form.number_field :subtotal, step: 0.01, class: "form-control"
+      .col-md-6
+        .mb-3
+          = form.label :total, class: "form-label"
+          = form.number_field :total, step: 0.01, class: "form-control"
+      .col-md-6
+        .mb-3
+          = form.label :status, class: "form-label"
+          = form.select :status, Quotation.statuses.keys.map {|k| [k.humanize, k]}, {prompt: "Select status"}, {class: "form-select"}
+      .col-12
+        .mb-3
+          = form.label :terms_conditions, class: "form-label"
+          = form.text_area :terms_conditions, class: "form-control", rows: 3
+      .col-12
+        .mb-3
+          = form.label :notes, class: "form-label"
+          = form.text_area :notes, class: "form-control", rows: 2
+
+      .col-md-12
+        .mb-3
+          = form.label :attachments, "Attachments", class: "form-label"
+          .nested-fields
+            = form.fields_for :attachments do |attachment_form|
+              .attachment-field.mb-2
+                = attachment_form.file_field :file, class: "form-control mb-1"
+                = attachment_form.text_field :file_description, placeholder: "File description", class: "form-control mb-1"
+                - if attachment_form.object.persisted?
+                  = attachment_form.check_box :_destroy
+                  = attachment_form.label :_destroy, "Remove"
+          .add-attachment
+            %button.btn.btn-sm.btn-outline-secondary{type: "button", onclick: "add_attachment_field(this)"}
+              %i.bi.bi-plus
+              Add file
+      .col-12
+        = form.submit "Save", class: "btn btn-primary"
+        = link_to "Cancel", quotations_path, class: "btn btn-secondary"
+
+:javascript
+  function add_attachment_field(button) {
+    const form = $(button).closest('form');
+    const attachmentsContainer = form.find('.nested-fields');
+    const newFieldIndex = attachmentsContainer.find('.attachment-field').length;
+    const newField = `
+      <div class="attachment-field mb-2">
+        <input type="file" name="quotation[attachments_attributes][${newFieldIndex}][file]" class="form-control mb-1" />
+        <input type="text" name="quotation[attachments_attributes][${newFieldIndex}][file_description]" placeholder="File description" class="form-control mb-1" />
+      </div>
+    `;
+    attachmentsContainer.append(newField);
+  }

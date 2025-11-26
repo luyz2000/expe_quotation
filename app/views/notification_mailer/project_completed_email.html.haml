@@ -1,0 +1,22 @@
+%h2 Project Completed
+
+%p Dear #{@user.name},
+
+%p Project #{@project.name} has been completed successfully.
+
+%table{style: "width: 100%; border-collapse: collapse;"}
+  %tr
+    %td{style: "padding: 8px; border: 1px solid #ddd; font-weight: bold;"} Project Name
+    %td{style: "padding: 8px; border: 1px solid #ddd;"}= @project.name
+  %tr
+    %td{style: "padding: 8px; border: 1px solid #ddd; font-weight: bold;"} Client
+    %td{style: "padding: 8px; border: 1px solid #ddd;"}= @project.client.company_name if @project.client
+  %tr
+    %td{style: "padding: 8px; border: 1px solid #ddd; font-weight: bold;"} Completion Date
+    %td{style: "padding: 8px; border: 1px solid #ddd;"}= @project.actual_end_date
+
+%p
+  = link_to "View Project", @url, class: "button", style: "color: white; text-decoration: none;"
+
+%p Best regards,
+%p Expe Engineering Team

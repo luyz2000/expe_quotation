@@ -15,48 +15,23 @@
 default: &default
   adapter: postgresql
   encoding: unicode
+  host: <%= Rails.application.credentials.dig(Rails.env.to_sym, :DATABASE, :HOST) %>
+  username: <%= Rails.application.credentials.dig(Rails.env.to_sym, :DATABASE, :USERNAME) %>
+  password: <%= Rails.application.credentials.dig(Rails.env.to_sym, :DATABASE, :PASSWORD) %>
   # For details on connection pooling, see Rails configuration guide
   # https://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
-
 development:
   <<: *default
-  database: expe_quotation_development
-
-  # The specified database role being used to connect to PostgreSQL.
-  # To create additional roles in PostgreSQL see `$ createuser --help`.
-  # When left blank, PostgreSQL will use the default role. This is
-  # the same name as the operating system user running Rails.
-  #username: expe_quotation
-
-  # The password associated with the PostgreSQL role (username).
-  #password:
-
-  # Connect on a TCP socket. Omitted by default since the client uses a
-  # domain socket that doesn't need configuration. Windows does not have
-  # domain sockets, so uncomment these lines.
-  #host: localhost
-
-  # The TCP port the server listens on. Defaults to 5432.
-  # If your server runs on a different port number, change accordingly.
-  #port: 5432
-
-  # Schema search path. The server defaults to $user,public
-  #schema_search_path: myapp,sharedapp,public
-
-  # Minimum log levels, in increasing order:
-  #   debug5, debug4, debug3, debug2, debug1,
-  #   log, notice, warning, error, fatal, and panic
-  # Defaults to warning.
-  #min_messages: notice
+  database: <%= Rails.application.credentials.dig(Rails.env.to_sym, :DATABASE, :NAME)&.to_s + '_development' %>
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: expe_quotation_test
+  database: <%= Rails.application.credentials.dig(Rails.env.to_sym, :DATABASE, :NAME)&.to_s + '_test' %>
 
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
@@ -81,18 +56,18 @@ test:
 production:
   primary: &primary_production
     <<: *default
-    database: expe_quotation_production
-    username: expe_quotation
-    password: <%= ENV["EXPE_QUOTATION_DATABASE_PASSWORD"] %>
+    database: <%= Rails.application.credentials.dig(Rails.env.to_sym, :DATABASE, :NAME)&.to_s + '_production' %>
+    username: <%= Rails.application.credentials.dig(Rails.env.to_sym, :DATABASE, :USERNAME) %>
+    password: <%= Rails.application.credentials.dig(Rails.env.to_sym, :DATABASE, :PASSWORD) %>
   cache:
     <<: *primary_production
-    database: expe_quotation_production_cache
+    database: <%= Rails.application.credentials.dig(Rails.env.to_sym, :DATABASE, :NAME)&.to_s + '_production_cache' %>
     migrations_paths: db/cache_migrate
   queue:
     <<: *primary_production
-    database: expe_quotation_production_queue
+    database: <%= Rails.application.credentials.dig(Rails.env.to_sym, :DATABASE, :NAME)&.to_s + '_queue' %>
     migrations_paths: db/queue_migrate
   cable:
     <<: *primary_production
-    database: expe_quotation_production_cable
+    database: <%= Rails.application.credentials.dig(Rails.env.to_sym, :DATABASE, :NAME)&.to_s + '_cable' %>
     migrations_paths: db/cable_migrate

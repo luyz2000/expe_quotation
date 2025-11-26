@@ -1,0 +1,8 @@
+%h1 Add New Quotation Item
+
+.card
+  .card-body
+    = render 'form'
+
+.card-footer
+  = link_to "Back to Quotation", quotation_path(@quotation), class: "btn btn-secondary"

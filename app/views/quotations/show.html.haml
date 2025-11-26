@@ -1,0 +1,99 @@
+%h1.text-main= "Quotation ##{@quotation.quotation_number}"
+
+.card.mb-3
+  .card-body
+    .row
+      .col-md-6
+        %h5.card-title Quotation Information
+        %p
+          %strong Project:
+          = @quotation.project&.name
+        %p
+          %strong Client:
+          = @quotation.client&.company_name
+        %p
+          %strong Salesperson:
+          = @quotation.salesperson&.name
+        %p
+          %strong Project Type:
+          = @quotation.project_type&.humanize
+        %p
+          %strong Status:
+          = @quotation.status&.humanize
+      .col-md-6
+        %h5.card-title Dates and Amounts
+        %p
+          %strong Issue Date:
+          = @quotation.publish_date
+        %p
+          %strong Expiry Date:
+          = @quotation.expiry_date
+        %p
+          %strong Subtotal:
+          = number_to_currency(@quotation.subtotal, unit: "$", separator: ".", delimiter: ",")
+        %p
+          %strong Total:
+          = number_to_currency(@quotation.total, unit: "$", separator: ".", delimiter: ",")
+    %p
+      %strong Terms and Conditions:
+      = @quotation.terms_conditions
+    %p
+      %strong Notes:
+      = @quotation.notes
+
+- if @quotation.attachments.any?
+  .card.mt-3
+    .card-header
+      %h5 Attachments
+    .card-body
+      %ul.list-group.list-group-flush
+        - @quotation.attachments.each do |attachment|
+          %li.list-group-item
+            - if attachment.file.present?
+              %i.bi.bi-file-earmark
+              = link_to attachment.file.identifier, attachment.file.url, target: "_blank"
+              - if attachment.file_description.present?
+                .text-muted.small
+                  = attachment.file_description
+            - else
+              .text-danger File not available
+
+.card.mb-3
+  .card-header
+    %h5 Quotation Items
+  .card-body
+    .table-responsive
+      %table.table
+        %thead
+          %tr
+            %th Type
+            %th Description
+            %th Quantity
+            %th Unit
+            %th Unit Price
+            %th Amount
+            %th Currency
+            %th Actions
+        %tbody
+          - @quotation_items.each do |item|
+            %tr
+              %td= item.item_type&.humanize
+              %td= item.description
+              %td= item.quantity
+              %td= item.unit&.humanize
+              %td= number_to_currency(item.unit_price, unit: "$", separator: ".", delimiter: ",")
+              %td= number_to_currency(item.amount, unit: "$", separator: ".", delimiter: ",")
+              %td= item.currency
+              %td
+                = link_to "Edit", edit_quotation_quotation_item_path(@quotation, item), class: "btn btn-sm btn-outline-secondary"
+                = link_to "Delete", quotation_quotation_item_path(@quotation, item), method: :delete, class: "btn btn-sm btn-outline-danger", confirm: "Are you sure?"
+
+    .mt-3
+      = link_to "Add Item", new_quotation_quotation_item_path(@quotation), class: "btn btn-primary"
+
+.card-footer
+  = link_to "Edit", edit_quotation_path(@quotation), class: "btn btn-primary"
+  = link_to "Generate PDF", download_pdf_quotation_path(@quotation, format: :pdf), class: "btn btn-success"
+  = link_to "Share QR", public_show_qr_path(@quotation), class: "btn btn-info", target: "_blank"
+  = link_to "Public View", public_quotation_path(@quotation), class: "btn btn-outline-primary", target: "_blank"
+  = link_to "Back", quotations_path, class: "btn btn-secondary"

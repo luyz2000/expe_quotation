@@ -1,0 +1,18 @@
+%h1.text-main= "QR Code para Cotización ##{@quotation.quotation_number}"
+
+.card.mb-3
+  .card-body.text-center
+    %h5.card-title Escanea este código QR
+    %p.card-text
+      Escanea este código QR para acceder directamente a la cotización #{@quotation.quotation_number}
+    .mt-3
+      != @qr_code_svg
+    .mt-3
+      %p
+        %strong URL:
+      %p
+        = public_quotation_url(@quotation.id)
+
+.card-footer
+  = link_to "Volver", :back, class: "btn btn-secondary"
+  = link_to "Ver cotización", public_quotation_path(@quotation), class: "btn btn-primary"

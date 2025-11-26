@@ -1,0 +1,230 @@
+// Theme colors based on documentation/theme_colors.json
+$primary: #F7931E;
+$secondary: #000000;
+$accent: #FFD700;
+$background: #FFFFFF;
+$text-main: #1A1A1A;
+$text-secondary: #333333;
+$text-muted: #666666;
+$text-inverse: #FFFFFF;
+
+// Header colors
+$header-background: #000000;
+$header-text: #F5F5F5;
+$header-highlight: #F7931E;
+
+// Footer colors
+$footer-background: #1A1A1A;
+$footer-text: #FFFFFF;
+$footer-accent: #F7931E;
+
+// Links
+$link-default: #F7931E;
+$link-hover: #CC7A15;
+
+// Buttons
+$btn-primary-bg: #25D366;
+$btn-primary-color: #FFFFFF;
+$btn-hover-bg: #1EBE5C;
+$btn-secondary-bg: #F7931E;
+$btn-secondary-color: #FFFFFF;
+$btn-hover-secondary-bg: #CC7A15;
+
+// Icons
+$icon-social-bg: #FBB117;
+$icon-social-text: #000000;
+
+// Dividers
+$divider-color: #E0E0E0;
+
+// Cards
+$card-bg: #FFFFFF;
+$card-shadow: rgba(0, 0, 0, 0.1);
+
+// Apply custom theme colors to Bootstrap
+:root {
+  --bs-primary: #{$primary};
+  --bs-secondary: #{$secondary};
+  --bs-success: #198754;
+  --bs-info: #0dcaf0;
+  --bs-warning: #{$accent};
+  --bs-danger: #dc3545;
+  --bs-light: #f8f9fa;
+  --bs-dark: #212529;
+  --bs-primary-rgb: 247, 147, 30; // F7931E
+  --bs-secondary-rgb: 0, 0, 0; // 000000
+  --bs-body-color: #{$text-main};
+  --bs-body-bg: #{$background};
+}
+
+// Custom styles for headers and footers
+.header {
+  background-color: $header-background;
+  color: $header-text;
+  
+  a {
+    color: $header-text;
+    
+    &:hover {
+      color: $header-highlight;
+    }
+  }
+}
+
+.footer {
+  background-color: $footer-background;
+  color: $footer-text;
+  
+  a {
+    color: $footer-text;
+    
+    &:hover {
+      color: $footer-accent;
+    }
+  }
+}
+
+// Link styling
+a {
+  color: $link-default;
+  
+  &:hover {
+    color: $link-hover;
+  }
+}
+
+// Button styling
+.btn-primary {
+  background-color: $btn-primary-bg;
+  border-color: $btn-primary-bg;
+  color: $btn-primary-color;
+  
+  &:hover {
+    background-color: $btn-hover-bg;
+    border-color: $btn-hover-bg;
+  }
+}
+
+.btn-secondary {
+  background-color: $btn-secondary-bg;
+  border-color: $btn-secondary-bg;
+  color: $btn-secondary-color;
+  
+  &:hover {
+    background-color: $btn-hover-secondary-bg;
+    border-color: $btn-hover-secondary-bg;
+  }
+}
+
+// Card styling
+.card {
+  background-color: $card-bg;
+  box-shadow: 0 0.5rem 1rem $card-shadow;
+}
+
+// Text colors
+.text-main {
+  color: $text-main;
+}
+
+.text-secondary {
+  color: $text-secondary;
+}
+
+.text-muted {
+  color: $text-muted;
+}
+
+.text-inverse {
+  color: $text-inverse;
+}
+
+// Background colors
+.bg-primary-custom {
+  background-color: $primary !important;
+}
+
+.bg-secondary-custom {
+  background-color: $secondary !important;
+}
+
+.bg-accent {
+  background-color: $accent !important;
+}
+
+.bg-header {
+  background-color: $header-background !important;
+}
+
+.bg-footer {
+  background-color: $footer-background !important;
+}
+
+// Divider
+.divider {
+  border-top: 1px solid $divider-color;
+}
+
+// Dark mode related styles
+[data-bs-theme="dark"] {
+  --bs-body-color: #{$text-inverse};
+  --bs-body-bg: #212529;
+  --bs-primary: #F7931E;
+  --bs-secondary: #6c757d;
+  --bs-success: #198754;
+  --bs-info: #0dcaf0;
+  --bs-warning: #{$accent};
+  --bs-danger: #dc3545;
+  --bs-light: #f8f9fa;
+  --bs-dark: #212529;
+  --bs-gray: #6c757d;
+
+  // Override theme colors for dark mode
+  --bs-primary-rgb: 247, 147, 30; // F7931E
+  --bs-secondary-rgb: 0, 0, 0; // 000000
+
+  // Card backgrounds in dark mode
+  --bs-card-bg: #343a40;
+}
+
+// Additional dark mode styling
+[data-bs-theme="dark"] {
+  .header {
+    background-color: #343a40 !important;
+  }
+
+  .footer {
+    background-color: #343a40 !important;
+  }
+
+  .card {
+    background-color: var(--bs-card-bg);
+    border: 1px solid #495057;
+  }
+
+  .table {
+    --bs-table-color: #f8f9fa;
+    --bs-table-bg: #212529;
+    --bs-table-border-color: #495057;
+  }
+
+  .table-striped > tbody > tr:nth-of-type(odd) > * {
+    --bs-table-accent-bg: #343a40;
+  }
+
+  .form-control, .form-select {
+    background-color: #343a40;
+    border-color: #495057;
+    color: #f8f9fa;
+  }
+
+  .form-control:focus, .form-select:focus {
+    background-color: #343a40;
+    border-color: #{$primary};
+    box-shadow: 0 0 0 0.2rem rgba(247, 147, 30, 0.25);
+  }
+}
+
+.great-icons{
+  font-size: 7rem;
+}

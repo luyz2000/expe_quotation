@@ -1,0 +1,74 @@
+%h1.text-main= "Cotización Pública ##{@quotation.quotation_number}"
+
+.card.mb-3
+  .card-body
+    .row
+      .col-md-6
+        %h5.card-title Información de la Cotización
+        %p
+          %strong Proyecto:
+          = @quotation.project&.name
+        %p
+          %strong Cliente:
+          = @quotation.client&.company_name
+        %p
+          %strong Tipo Proyecto:
+          = @quotation.project_type&.humanize
+        %p
+          %strong Estado:
+          = @quotation.status&.humanize
+      .col-md-6
+        %h5.card-title Fechas y Montos
+        %p
+          %strong Fecha Emisión:
+          = @quotation.publish_date
+        %p
+          %strong Fecha Vencimiento:
+          = @quotation.expiry_date
+        %p
+          %strong Subtotal:
+          = number_to_currency(@quotation.subtotal, unit: "$", separator: ".", delimiter: ",")
+        %p
+          %strong Total:
+          = number_to_currency(@quotation.total, unit: "$", separator: ".", delimiter: ",")
+
+    %p
+      %strong Términos y Condiciones:
+      = @quotation.terms_conditions
+    %p
+      %strong Notas:
+      = @quotation.notes
+
+.card.mb-3
+  .card-header
+    %h5 Conceptos de la Cotización
+  .card-body
+    .table-responsive
+      %table.table
+        %thead
+          %tr
+            %th Tipo
+            %th Descripción
+            %th Cantidad
+            %th Unidad
+            %th Precio Unitario
+            %th Importe
+        %tbody
+          - @quotation.quotation_items.each do |item|
+            %tr
+              %td= item.item_type&.humanize
+              %td= item.description
+              %td= item.quantity
+              %td= item.unit&.humanize
+              %td= number_to_currency(item.unit_price, unit: "$", separator: ".", delimiter: ",")
+              %td= number_to_currency(item.amount, unit: "$", separator: ".", delimiter: ",")
+
+.card.mt-3
+  .card-header
+    %h5 Escanea el código QR
+  .card-body.text-center
+    %p Escanea este código QR para acceder directamente a esta cotización:
+    = image_tag public_qr_image_path(@quotation), alt: "QR Code", style: "width: 200px; height: 200px;"
+
+.card-footer
+  = link_to "Volver al sitio", root_path, class: "btn btn-secondary"

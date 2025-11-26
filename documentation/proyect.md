@@ -8,7 +8,7 @@ Necesitamos crear una aplicación web para el manejo completo de cotizaciones de
 * Lenguaje de programación: ruby 3.3.9
 * Framework: Rails 8.0.3
 * Css Framework: ultima version estable de bootstrap
-* iconos: FontAwesome free version
+* iconos: Bootstrap Icons
 * apexcharts para graficas y estadisticas
 * Sistema de plantillas: haml
 * Motor de base de datos: Postgresql
@@ -51,10 +51,10 @@ Necesitamos crear una aplicación web para el manejo completo de cotizaciones de
 
 ### 1. Usuarios (`users`)
 - nombre
-- apellido
+- last_name
 - email
 - contraseña
-- rol (admin, vendedor) # como enumerador de rails
+- rol (admin, salesperson, engineer) # como enumerador de rails
 - estado (activo/inactivo)
 
 ### 2. Clientes (`clients`)
@@ -73,7 +73,7 @@ Necesitamos crear una aplicación web para el manejo completo de cotizaciones de
 - nombre
 - descripcion
 - cliente_id → (FK: clients.id)
-- responsable_id → (FK: users.id)
+- responsible_id → (FK: users.id)
 - ubicacion
 - tipo_proyecto (construccion, instalacion, modificacion, etc.) # como enumerador de rails
 - estatus (planificado, aceptado, en_progreso, completado, cancelado) # como enumerador de rails
@@ -85,7 +85,7 @@ Necesitamos crear una aplicación web para el manejo completo de cotizaciones de
 - numero_cotizacion
 - proyecto_id → (FK: projects.id)
 - cliente_id → (FK: clients.id)
-- vendedor_id → (FK: users.id)
+- salesperson_id → (FK: users.id)
 - tipo_proyecto (media_tension, baja_tension, automatizacion, etc.) # como enumerador de rails
 - fecha_emision
 - fecha_vencimiento
@@ -146,14 +146,14 @@ Perfecto. A continuación tienes el documento revisado, corregido y ajustado **s
 | Rol               | Descripción                                                                                              | Nivel de acceso |
 | ----------------- | -------------------------------------------------------------------------------------------------------- | --------------- |
 | **Administrador** | Control total del sistema: gestiona usuarios, proyectos, materiales, proveedores y reportes financieros. | Alto            |
-| **Vendedor**      | Gestiona clientes, cotizaciones y seguimiento de proyectos asignados.                                    | Medio           |
-| **Ingeniero**     | Supervisa la ejecución técnica de los proyectos y participa en la elaboración de cotizaciones.           | Medio           |
+| **Salesperson**      | Gestiona clientes, cotizaciones y seguimiento de proyectos asignados.                                    | Medio           |
+| **Engineer**     | Supervisa la ejecución técnica de los proyectos y participa en la elaboración de cotizaciones.           | Medio           |
 
 ---
 
 ## ⚙️ Relaciones y jerarquía de acceso
 
-| Entidad                     | Acceso **Administrador**                  | Acceso **Vendedor**                                    | Acceso **Ingeniero**                                |
+| Entidad                     | Acceso **Administrador**                  | Acceso **Salesperson**                                    | Acceso **Engineer**                                |
 | --------------------------- | ----------------------------------------- | ------------------------------------------------------ | --------------------------------------------------- |
 | **Usuarios**                | Crear, editar, activar/inactivar usuarios | Ver y editar su propio perfil                          | Ver y editar su propio perfil                       |
 | **Clientes**                | CRUD completo                             | Crear, ver y editar solo sus clientes                  | Ver clientes asignados                              |

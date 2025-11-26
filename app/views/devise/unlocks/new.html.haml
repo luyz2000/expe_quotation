@@ -1,0 +1,28 @@
+.container
+  .row.min-vh-100.justify-content-center.align-items-center
+    .col-md-6.col-lg-5
+      .card.shadow-lg.rounded-4.border-0
+        .card-body.p-5
+          .text-center.mb-5
+            .mb-4
+              %i.bi.bi-unlock.text-primary
+              %h2.fw-bold.text-main Desbloquear Cuenta
+            %h4.fw-bold.text-main ¿No recibió instrucciones de desbloqueo?
+            %p.text-muted.text-center Ingrese su email y le enviaremos instrucciones para desbloquear su cuenta
+
+          = render "devise/shared/error_messages", resource: resource
+
+          = form_for(resource, as: resource_name, url: unlock_path(resource_name), html: { method: :post, class: "mt-3" }) do |f|
+            .mb-4
+              .input-group
+                %span.input-group-text
+                  %i.bi.bi-envelope
+                = f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control form-control-lg ps-2", placeholder: "Email"
+
+            .d-grid
+              = f.submit "Reenviar instrucciones", class: "btn btn-secondary btn-lg rounded-pill py-3 fw-bold shadow-sm"
+
+          .text-center.mt-4
+            %p.text-muted
+              ¿Ya tiene acceso?
+              = link_to "Iniciar sesión", new_session_path(resource_name), class: "text-primary text-decoration-none fw-medium"

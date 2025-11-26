@@ -1,0 +1,60 @@
+%h1.text-main= @project.name
+
+.card.mb-3
+  .card-body
+    %h5.card-title Project Information
+    .row
+      .col-md-6
+        %p
+          %strong Folio Number:
+          = @project.folio_number
+        %p
+          %strong Client:
+          = @project.client&.company_name
+        %p
+          %strong Responsible:
+          = @project.responsible&.name
+        %p
+          %strong Project Type:
+          = @project.project_type&.humanize
+      .col-md-6
+        %p
+          %strong Status:
+          = @project.status&.humanize
+        %p
+          %strong Start Date:
+          = @project.start_date
+        %p
+          %strong Estimated End Date:
+          = @project.estimated_end_date
+        %p
+          %strong Actual End Date:
+          = @project.actual_end_date
+    %p
+      %strong Description:
+      = @project.description
+    %p
+      %strong Location:
+      = @project.location
+
+- if @project.attachments.any?
+  .card.mb-3
+    .card-header
+      %h5.card-title Archivos Adjuntos
+    .card-body
+      %ul.list-group.list-group-flush
+        - @project.attachments.each do |attachment|
+          %li.list-group-item
+            - if attachment.file.present?
+              %i.bi.bi-file-earmark
+              = link_to attachment.file.identifier, attachment.file.url, target: "_blank"
+              - if attachment.file_description.present?
+                .text-muted.small
+                  = attachment.file_description
+            - else
+              .text-danger Archivo no disponible
+
+.card-footer
+  = link_to "Editar", edit_project_path(@project), class: "btn btn-primary"
+  = link_to "Cotizaciones", quotations_path(q: { project_id_eq: @project.id }), class: "btn btn-info"
+  = link_to "Regresar", projects_path, class: "btn btn-secondary"

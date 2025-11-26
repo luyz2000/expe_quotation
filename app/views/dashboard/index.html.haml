@@ -1,0 +1,49 @@
+%h1.text-main Dashboard
+
+.row.mb-4
+  .col-md-3
+    .card.text-center
+      .card-body
+        %h5.card-title Total de Cotizaciones
+        %h2.text-primary= @total_quotations
+  .col-md-3
+    .card.text-center
+      .card-body
+        %h5.card-title Total de Proyectos
+        %h2.text-success= @total_projects
+  .col-md-3
+    .card.text-center
+      .card-body
+        %h5.card-title Proyectos en Progreso
+        %h2.text-warning= @projects_in_progress
+  .col-md-3
+    .card.text-center
+      .card-body
+        %h5.card-title Ingresos Mensuales
+        %h2.text-info= number_to_currency(@monthly_revenue, unit: "$", separator: ".", delimiter: ",")
+
+.dashboard-charts{"data-controller" => "dashboard",
+                  "data-dashboard-quotations-by-status-value" => @quotations_by_status.to_json,
+                  "data-dashboard-projects-by-type-value" => @projects_by_type.to_json,
+                  "data-dashboard-quotations-by-month-value" => @quotations_by_month.to_json }
+  .row
+    .col-md-6
+      .card
+        .card-header
+          %h5.text-center Cotizaciones por Estado
+        .card-body
+          #quotations-by-status-chart{"data-dashboard-target" => "quotationsByStatus"}
+    .col-md-6
+      .card
+        .card-header
+          %h5.text-center Proyectos por Tipo
+        .card-body
+          #projects-by-type-chart{"data-dashboard-target" => "projectsByType"}
+
+  .row.mt-4
+    .col-12
+      .card
+        .card-header
+          %h5.text-center Cotizaciones por Mes
+        .card-body
+          #quotations-by-month-chart{"data-dashboard-target" => "quotationsByMonth"}

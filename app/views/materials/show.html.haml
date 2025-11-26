@@ -1,0 +1,37 @@
+%h1.text-main= @material.title
+
+.card.mb-3
+  .card-body
+    %h5.card-title Información del Material
+    .row
+      .col-md-6
+        %p
+          %strong Código:
+          = @material.code
+        %p
+          %strong Título:
+          = @material.title
+        %p
+          %strong Descripción:
+          = simple_format(@material.description)
+        %p
+          %strong Unidad:
+          = @material.unit&.humanize
+      .col-md-6
+        %p
+          %strong Categoría:
+          = @material.category&.humanize
+        %p
+          %strong Precio Costo:
+          = number_to_currency(@material.cost_price)
+        %p
+          %strong Precio Público:
+          = number_to_currency(@material.public_price)
+        %p
+          %strong Fecha de Creación:
+          = l(@material.created_at, format: :long)
+
+.card-footer
+  = link_to "Editar", edit_material_path(@material), class: "btn btn-primary"
+  = link_to "Eliminar", @material, method: :delete, confirm: "¿Estás seguro?", class: "btn btn-danger"
+  = link_to "Regresar", materials_path, class: "btn btn-secondary"

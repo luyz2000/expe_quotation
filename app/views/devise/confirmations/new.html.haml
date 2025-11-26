@@ -1,0 +1,31 @@
+.container
+  .row.justify-content-center.align-items-center
+    .col-md-6.col-lg-5
+      .card.shadow-lg.rounded-4.border-0
+        .card-body.p-5
+          .text-center.mb-5
+            .mb-4
+              %i.bi.bi-envelope-check.text-primary
+              %h2.fw-bold.text-main Confirmar Cuenta
+            %h4.fw-bold.text-main Verifique su email
+            %p.text-muted.text-center Le hemos enviado un email con instrucciones para confirmar su cuenta
+
+          %p.text-main.text-center.mb-4
+            = t('.instruction', default: "You will receive an email with instructions on how to confirm your email address in a few minutes.")
+
+          = form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post }) do |f|
+            = render "devise/shared/error_messages", resource: resource
+
+            .mb-4
+              .input-group
+                %span.input-group-text
+                  %i.bi.bi-envelope
+                = f.email_field :email, autofocus: true, autocomplete: "email", value: (resource.pending_reconfirmation? ? resource.unconfirmed_email : resource.email), class: "form-control form-control-lg ps-2", placeholder: "Email"
+
+            .d-grid
+              = f.submit "Reenviar instrucciones", class: "btn btn-secondary btn-lg rounded-pill py-3 fw-bold shadow-sm"
+
+          .text-center.mt-4
+            %p.text-muted
+              ¿Ya confirmó su cuenta?
+              = link_to "Iniciar sesión", new_session_path(resource_name), class: "text-primary text-decoration-none fw-medium"

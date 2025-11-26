@@ -1,0 +1,10 @@
+/ This file can be used as a template for PDF cover pages when using formats other than Prawn
+%div.cover-page
+  %h1= "Quotation ##{@quotation&.quotation_number}"
+  %p= "Issue Date: #{@quotation&.publish_date}"
+  %p= "Expiry Date: #{@quotation&.expiry_date}"
+  
+  %h2 Client Information
+  %p= @quotation&.client&.company_name
+  %p= @quotation&.client&.address
+  %p= "#{@quotation&.client&.city}, #{@quotation&.client&.state}" if @quotation&.client&.city || @quotation&.client&.state

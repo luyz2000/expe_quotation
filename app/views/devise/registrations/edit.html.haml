@@ -1,0 +1,67 @@
+.container.mb-4
+  .row.justify-content-center.align-items-center
+    .col-md-8.col-lg-6
+      .card.shadow-lg.rounded-4.border-0
+        .card-body.p-5
+          .text-center.mb-5
+            %h2.fw-bold.text-main Editar Perfil
+            %p.text-muted.text-center Actualice su información personal
+
+          = render "devise/shared/error_messages", resource: resource
+
+          = form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, class: "mt-3" }) do |f|
+            .mb-4
+              .input-group
+                %span.input-group-text
+                  %i.bi.bi-person
+                = f.text_field :name, autofocus: true, class: "form-control form-control-lg ps-2", placeholder: "Nombre"
+
+            .mb-4
+              .input-group
+                %span.input-group-text
+                  %i.bi.bi-person-vcard
+                = f.text_field :username, class: "form-control form-control-lg ps-2", placeholder: "Nombre de usuario"
+
+            .mb-4
+              .input-group
+                %span.input-group-text
+                  %i.bi.bi-envelope
+                = f.email_field :email, autocomplete: "email", class: "form-control form-control-lg ps-2", placeholder: "Email"
+
+            - if devise_mapping.confirmable? && resource.pending_reconfirmation?
+              %p.alert.alert-warning
+                Currently waiting confirmation for: #{resource.unconfirmed_email}
+
+            .mb-4
+              .input-group
+                %span.input-group-text
+                  %i.bi.bi-lock
+                = f.password_field :password, autocomplete: "new-password", class: "form-control form-control-lg ps-2", placeholder: "Nueva contraseña (dejar en blanco si no desea cambiarla)"
+              %p.text-muted.small.mb-0.mt-2
+                Deje este campo en blanco si no desea cambiar la contraseña. 
+                Si ingresa una nueva contraseña, debe ingresar también la contraseña actual.
+
+            .mb-4
+              .input-group
+                %span.input-group-text
+                  %i.bi.bi-lock
+                = f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control form-control-lg ps-2", placeholder: "Confirmar nueva contraseña"
+
+            .mb-4
+              .input-group
+                %span.input-group-text
+                  %i.bi.bi-key
+                = f.password_field :current_password, autocomplete: "current-password", class: "form-control form-control-lg ps-2", placeholder: "Contraseña actual (requerido para guardar cambios)"
+
+            .d-grid.d-flex.gap-3
+              = f.submit "Actualizar", class: "btn btn-secondary flex-fill"
+              = link_to "Cancelar", :back, class: "btn btn-outline-secondary fw-bold"
+
+          .text-center.mt-4
+            %hr.divider
+            .mt-4
+              %h4.fw-bold.text-main.text-danger Eliminar Cuenta
+              %p.text-muted.mb-3
+                Esta acción no se puede deshacer. ¿Está seguro?
+              .d-grid
+                = button_to "Eliminar mi cuenta", registration_path(resource_name), class: "btn btn-danger", method: :delete, data: { confirm: "¿Está seguro? Esta acción no se puede deshacer." }

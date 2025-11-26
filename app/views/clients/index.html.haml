@@ -1,0 +1,44 @@
+%h1.text-main Clientes
+
+.row.mb-3
+  .col-md-6
+    = search_form_for @q, url: clients_path, class: "d-flex" do |f|
+      = f.search_field :company_name_cont, placeholder: "Search by company name", class: "form-control me-2"
+      = f.search_field :tax_id_cont, placeholder: "Search by tax ID", class: "form-control me-2"
+      = f.submit "Buscar", class: "btn btn-primary"
+  .col-md-6.text-md-end
+    = link_to "Nuevo Cliente", new_client_path, class: "btn btn-success"
+
+.table-responsive
+  %table.table.table-striped
+    %thead
+      %tr
+        %th Company Name
+        %th Tax ID
+        %th Contact Name
+        %th Email
+        %th Phone
+        %th Client Type
+        %th City
+        %th State
+        %th Actions
+    %tbody
+      - @clients.each do |client|
+        %tr
+          %td= client.company_name
+          %td= client.tax_id
+          %td= client.contact_name
+          %td= client.contact_email
+          %td= client.contact_phone
+          %td= client.client_type&.humanize
+          %td= client.city
+          %td= client.state
+          %td
+            = link_to "Ver", client, class: "btn btn-sm btn-outline-primary"
+            = link_to "Editar", edit_client_path(client), class: "btn btn-sm btn-outline-secondary"
+            = link_to "Eliminar", client, method: :delete, class: "btn btn-sm btn-outline-danger", confirm: "¿Estás seguro?"
+
+.row.mt-3.justify-content-center
+  .col-auto
+    - if @pagy.pages > 1
+      = @pagy.series_nav(:bootstrap).html_safe

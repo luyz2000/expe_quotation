@@ -1,0 +1,28 @@
+.container
+  .row.justify-content-center.align-items-center
+    .col-md-6.col-lg-5
+      .card.shadow-lg.rounded-4.border-0
+        .card-body.p-5
+          .text-center.mb-3
+            .mb-4
+              %i.bi.bi-shield-lock.text-primary.great-icons
+              %h2.fw-bold.text-main Recuperar Contraseña
+            %h4.fw-bold.text-main ¿Olvidó su contraseña?
+            %p.text-muted.text-center Ingrese su email y le enviaremos instrucciones para restablecer su contraseña
+
+          = render "devise/shared/error_messages", resource: resource
+
+          = form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f|
+            .mb-4
+              .input-group
+                %span.input-group-text
+                  %i.bi.bi-envelope
+                = f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control form-control-lg ps-2", placeholder: "Email"
+
+            .d-grid
+              = f.submit "Enviar instrucciones", class: "btn btn-secondary"
+
+          .text-center.mt-4
+            %p.text-muted
+              ¿Recuerda su contraseña?
+              = link_to "Iniciar sesión", new_session_path(resource_name), class: "text-primary text-decoration-none fw-medium"

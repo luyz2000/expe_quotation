@@ -1,0 +1,51 @@
+%h1.text-main Cotizaciones
+
+.row.mb-3
+  .col-md-8
+    = search_form_for @q, url: quotations_path, class: "d-flex" do |f|
+      = f.search_field :quotation_number_cont, placeholder: "Search by number", class: "form-control me-2"
+      = f.search_field :client_company_name_cont, placeholder: "Search by client", class: "form-control me-2"
+      = f.submit "Buscar", class: "btn btn-primary"
+  .col-md-4.text-md-end
+    = link_to "Nueva Cotización", new_quotation_path, class: "btn btn-success"
+
+.table-responsive
+  %table.table.table-striped
+    %thead
+      %tr
+        %th Quotation Number
+        %th Client
+        %th Project
+        %th Salesperson
+        %th Project Type
+        %th Status
+        %th Issue Date
+        %th Total
+        %th Actions
+    %tbody
+      - @quotations.each do |quotation|
+        %tr
+          %td= quotation.quotation_number
+          %td= quotation.client&.company_name
+          %td= quotation.project&.name
+          %td= quotation.salesperson&.name
+          %td= quotation.project_type&.humanize
+          %td
+            %span{class: quotation.status == 'approved' ? 'text-success' : quotation.status == 'rejected' ? 'text-danger' : 'text-warning'}
+              = quotation.status&.humanize
+          %td= quotation.publish_date
+          %td= number_to_currency(quotation.total, unit: "$", separator: ".", delimiter: ",")
+          %td
+            = link_to "Ver", quotation, class: "btn btn-sm btn-outline-primary"
+            = link_to "Editar", edit_quotation_path(quotation), class: "btn btn-sm btn-outline-secondary"
+            - if can? :approve, quotation
+              = link_to "Approve", approve_quotation_path(quotation), method: :get, class: "btn btn-sm btn-success", confirm: "Are you sure you want to approve this quotation?"
+            - if can? :reject, quotation
+              = link_to "Reject", reject_quotation_path(quotation), method: :get, class: "btn btn-sm btn-danger", confirm: "Are you sure you want to reject this quotation?"
+            - if can? :send_for_approval, quotation
+              = link_to "Send for approval", send_for_approval_quotation_path(quotation), method: :get, class: "btn btn-sm btn-info", confirm: "Send this quotation for approval?"
+
+.row.mt-3.justify-content-center
+  .col-auto
+    - if @pagy.pages > 1
+      = @pagy.series_nav(:bootstrap).html_safe

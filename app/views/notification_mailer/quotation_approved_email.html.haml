@@ -1,0 +1,25 @@
+%h2 Quotation Approved
+
+%p Dear #{@user.name},
+
+%p Quotation #{@quotation.quotation_number} has been approved.
+
+%table{style: "width: 100%; border-collapse: collapse;"}
+  %tr
+    %td{style: "padding: 8px; border: 1px solid #ddd; font-weight: bold;"} Quotation Number
+    %td{style: "padding: 8px; border: 1px solid #ddd;"}= @quotation.quotation_number
+  %tr
+    %td{style: "padding: 8px; border: 1px solid #ddd; font-weight: bold;"} Project
+    %td{style: "padding: 8px; border: 1px solid #ddd;"}= @quotation.project.name if @quotation.project
+  %tr
+    %td{style: "padding: 8px; border: 1px solid #ddd; font-weight: bold;"} Client
+    %td{style: "padding: 8px; border: 1px solid #ddd;"}= @quotation.client.company_name if @quotation.client
+  %tr
+    %td{style: "padding: 8px; border: 1px solid #ddd; font-weight: bold;"} Total
+    %td{style: "padding: 8px; border: 1px solid #ddd;"}= number_to_currency(@quotation.total) if @quotation.total
+
+%p
+  = link_to "View Quotation", @url, class: "button", style: "color: white; text-decoration: none;"
+
+%p Best regards,
+%p Expe Engineering Team

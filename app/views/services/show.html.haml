@@ -1,0 +1,37 @@
+%h1.text-main= @service.title
+
+.card.mb-3
+  .card-body
+    %h5.card-title Información del Servicio
+    .row
+      .col-md-6
+        %p
+          %strong Código:
+          = @service.code
+        %p
+          %strong Título:
+          = @service.title
+        %p
+          %strong Descripción:
+          = simple_format(@service.description)
+        %p
+          %strong Unidad:
+          = @service.unit&.humanize
+      .col-md-6
+        %p
+          %strong Categoría:
+          = @service.category&.humanize
+        %p
+          %strong Precio Sugerido:
+          = number_to_currency(@service.suggested_price)
+        %p
+          %strong Precio Público:
+          = number_to_currency(@service.public_price)
+        %p
+          %strong Fecha de Creación:
+          = l(@service.created_at, format: :long)
+
+.card-footer
+  = link_to "Editar", edit_service_path(@service), class: "btn btn-primary"
+  = link_to "Eliminar", @service, method: :delete, confirm: "¿Estás seguro?", class: "btn btn-danger"
+  = link_to "Regresar", services_path, class: "btn btn-secondary"
