@@ -196,7 +196,7 @@ GEM
       net-smtp
     marcel (1.1.0)
     matrix (0.4.3)
-    mimemagic (0.3.10)
+    mimemagic (0.4.3)
       nokogiri (~> 1)
       rake
     mini_magick (5.3.1)
@@ -489,7 +489,7 @@ DEPENDENCIES
   hamlit
   importmap-rails
   jbuilder
-  mimemagic (~> 0.3.6)
+  mimemagic (~> 0.4.3)
   pagy
   paper_trail
   pg (~> 1.1)
